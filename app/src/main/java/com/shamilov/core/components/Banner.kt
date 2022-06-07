@@ -26,20 +26,17 @@ fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick
     val image = data.image
     val bannerHeight = data.bannerHeight
 
-    Box(
+    AsyncImage(
+        model = image,
+        contentDescription = null,
+        placeholder = ColorPainter(color = MaterialTheme.colorScheme.secondary),
+        error = ColorPainter(color = MaterialTheme.colorScheme.secondary),
         modifier = modifier
             .clip(RoundedCornerShape(Dimens.cornerRadius))
             .fillMaxWidth()
             .height(bannerHeight)
             .clickable { onClick() }
-    ) {
-        AsyncImage(
-            model = image,
-            contentDescription = null,
-            placeholder = ColorPainter(color = MaterialTheme.colorScheme.secondary),
-            error = ColorPainter(color = MaterialTheme.colorScheme.secondary)
-        )
-    }
+    )
 }
 
 @Composable

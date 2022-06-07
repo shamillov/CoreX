@@ -1,6 +1,7 @@
 package com.shamilov.core
 
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -40,8 +41,24 @@ fun MainScreen() {
         BannerComponent(data = BannerViewData("", 100.dp), modifier = Modifier.padding(horizontal = 8.dp)) {
             //onClick
         }
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         HeaderComponent(data = HeaderViewData("Акции", "Скидка на заказ от 1000"))
+        Spacer(modifier = Modifier.height(16.dp))
+        PromosComponent(data = PromosViewData(listOf(
+            PromoViewData("",""),
+            PromoViewData("",""),
+            PromoViewData("",""),
+            PromoViewData("",""),
+            PromoViewData("",""),
+            PromoViewData("",""),
+            PromoViewData("",""),
+            PromoViewData("",""),
+        ))) {
+
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+        HeaderComponent(data = HeaderViewData("Вы заказывали ранее", null))
     }
 }
 

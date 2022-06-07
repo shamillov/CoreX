@@ -3,6 +3,7 @@ package com.shamilov.core.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Icon
@@ -20,8 +21,9 @@ fun ToolbarComponent(modifier: Modifier = Modifier, onClick: () -> Unit) {
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
                 .padding(16.dp)
+                .size(32.dp)
+                .align(Alignment.CenterEnd)
                 .clickable { onClick() }
         )
     }
