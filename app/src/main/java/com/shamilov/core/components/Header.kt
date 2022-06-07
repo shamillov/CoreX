@@ -1,15 +1,13 @@
 package com.shamilov.core.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.shamilov.core.ui.theme.Dimens
 
 data class HeaderViewData(
     val title: String,
@@ -22,10 +20,15 @@ fun HeaderComponent(data: HeaderViewData, modifier: Modifier = Modifier) {
     val subtitle = data.subtitle
 
     Column(modifier = modifier) {
-        Text(text = title, fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)
+        Text(
+            text = title,
+            fontSize = Dimens.largeText,
+            fontWeight = FontWeight.ExtraBold,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
 
         if (!subtitle.isNullOrEmpty()) {
-            Text(text = subtitle, fontSize = 22.sp)
+            Text(text = subtitle, fontSize = Dimens.smallText, modifier = Modifier.padding(horizontal = 16.dp))
         }
     }
 }
@@ -33,7 +36,7 @@ fun HeaderComponent(data: HeaderViewData, modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun HeaderComponentPreview() {
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         HeaderComponent(data = HeaderViewData("Promo", null))
         Spacer(modifier = Modifier.size(8.dp))
         HeaderComponent(data = HeaderViewData("Популярное", "Доступно на закакз от 1000"))
