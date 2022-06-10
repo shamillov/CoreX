@@ -19,7 +19,7 @@ fun HeaderComponent(data: HeaderViewData, modifier: Modifier = Modifier) {
     val title = data.title
     val subtitle = data.subtitle
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = title,
             fontSize = Dimens.largeText,
@@ -36,7 +36,7 @@ fun HeaderComponent(data: HeaderViewData, modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun HeaderComponentPreview() {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column {
         HeaderComponent(data = HeaderViewData("Promo", null))
         Spacer(modifier = Modifier.size(8.dp))
         HeaderComponent(data = HeaderViewData("Популярное", "Доступно на закакз от 1000"))

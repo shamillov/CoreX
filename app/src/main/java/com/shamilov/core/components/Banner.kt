@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,9 +30,10 @@ fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick
     AsyncImage(
         model = image,
         contentDescription = null,
-        placeholder = ColorPainter(color = MaterialTheme.colorScheme.secondary),
-        error = ColorPainter(color = MaterialTheme.colorScheme.secondary),
+        placeholder = ColorPainter(color = MaterialTheme.colorScheme.primaryContainer),
+        error = ColorPainter(color = MaterialTheme.colorScheme.primaryContainer),
         modifier = modifier
+            .padding(horizontal = 8.dp)
             .clip(RoundedCornerShape(Dimens.cornerRadius))
             .fillMaxWidth()
             .height(bannerHeight)
