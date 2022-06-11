@@ -1,4 +1,4 @@
-package com.shamilov.core
+package com.shamilov.core.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shamilov.core.components.*
+import com.shamilov.core.presentation.components.*
 import com.shamilov.core.ui.theme.CoreTheme
 import com.shamilov.core.utils.DefaultSpacer
 

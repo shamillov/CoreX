@@ -1,4 +1,4 @@
-package com.shamilov.core.components
+package com.shamilov.core.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text

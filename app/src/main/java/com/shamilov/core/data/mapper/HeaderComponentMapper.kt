@@ -7,7 +7,7 @@ class HeaderComponentMapper {
     fun mapHeaderComponent(component: HeaderComponentResponse): HeaderComponent {
         return HeaderComponent(
             title = component.title,
-            subtitle = component.subtitle
+            subtitle = component.subtitle,
         )
     }
 }
