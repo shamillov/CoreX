@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.shamilov.core.presentation.auth.AuthScreen
 import com.shamilov.core.presentation.components.*
 import com.shamilov.core.ui.theme.CoreTheme
 import com.shamilov.core.utils.DefaultSpacer
@@ -29,7 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+//                    MainScreen()
+                    AuthScreen()
                 }
             }
         }
