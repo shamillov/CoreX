@@ -15,6 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.shamilov.core.presentation.auth.AuthScreen
 import com.shamilov.core.presentation.components.*
 import com.shamilov.core.ui.theme.CoreTheme
@@ -23,15 +27,20 @@ import com.shamilov.core.utils.DefaultSpacer
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+            val navController = rememberNavController()
+
             CoreTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    MainScreen()
-                    AuthScreen()
+                    NavHost(navController = navController, startDestination = "main") {
+                        composable("main") { MainScreen(navController) }
+                        composable("auth") { AuthScreen(navController) }
+                    }
                 }
             }
         }
@@ -39,11 +48,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController) {
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
-        ToolbarComponent { /* onClick() **/ }
+        ToolbarComponent { navController.navigate("auth") }
 
         BannerComponent(data = BannerViewData("", 100.dp)) { /* onClick() **/ }
 
@@ -103,6 +112,6 @@ fun MainScreen() {
 @Composable
 fun DefaultPreview() {
     CoreTheme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }

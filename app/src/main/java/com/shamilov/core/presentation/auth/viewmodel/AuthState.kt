@@ -1,13 +1,8 @@
 package com.shamilov.core.presentation.auth.viewmodel
 
-sealed class AuthState {
-    data class PhoneState(
-        val isLoading: Boolean,
-        val phone: String,
-    ) : AuthState()
-
-    data class CodeState(
-        val isLoading: Boolean,
-        val code: String,
-    )
-}
+data class AuthState(
+    val isLoading: Boolean = false,
+    val phone: String = "+7",
+    val phoneFieldEnabled: Boolean = true,
+    val buttonEnabled: Boolean = true,
+)
