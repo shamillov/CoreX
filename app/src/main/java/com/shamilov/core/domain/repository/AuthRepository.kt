@@ -1,6 +1,8 @@
 package com.shamilov.core.domain.repository
 
+import com.shamilov.core.data.model.AuthResponse
+
 interface AuthRepository {
-    fun isAuthorize(): Boolean
-    fun logout()
+    suspend fun sendPhone(phone: String): Result<AuthResponse>
+    suspend fun sendConde()
 }
