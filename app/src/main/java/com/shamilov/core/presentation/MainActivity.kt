@@ -43,9 +43,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         //temporary di
-        val httpClient = HttpClient.createHttpClient()
-        val api = httpClient.create(AuthNetworkApi::class.java)
         val prefs: AuthPreferences = AuthPreferencesImpl(this)
+        val httpClient = HttpClient.createHttpClient(prefs.getToken())
+        val api = httpClient.create(AuthNetworkApi::class.java)
         val repository = AuthRepositoryImpl(api, prefs)
         val useCase: AuthUseCase = AuthUseCaseImpl(repository)
         authUseCase = useCase

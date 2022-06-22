@@ -7,13 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.shamilov.core.auth.domain.usecase.AuthUseCase
-import com.shamilov.core.presentation.auth.viewmodel.AuthViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class CodeVerificationViewModel(
+class VerificationViewModel(
     private val authUseCase: AuthUseCase,
 ) : ViewModel() {
 
@@ -57,15 +56,17 @@ class CodeVerificationViewModel(
     }
 
     private fun validateCode(code: String) {
+        val isValid = code.isNotBlank() && code.length == 4
+
         state = state.copy(
             code = code,
-            buttonEnabled = code.isNotBlank()
+            buttonEnabled = isValid
         )
     }
 }
 
 class VerificationViewModelFactory(private val authUseCase: AuthUseCase) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CodeVerificationViewModel(authUseCase) as T
+        return VerificationViewModel(authUseCase) as T
     }
 }
