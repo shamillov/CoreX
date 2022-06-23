@@ -1,6 +1,7 @@
 package com.shamilov.core.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +29,13 @@ import com.shamilov.core.auth.data.remote.HttpClient
 import com.shamilov.core.auth.data.repository.AuthRepositoryImpl
 import com.shamilov.core.auth.domain.usecase.AuthUseCase
 import com.shamilov.core.auth.domain.usecase.AuthUseCaseImpl
+import com.shamilov.core.components.data.mapper.BannerComponentMapper
+import com.shamilov.core.components.data.mapper.ComponentsMapper
+import com.shamilov.core.components.data.mapper.HeaderComponentMapper
+import com.shamilov.core.components.data.remote.ComponentsNetworkApi
+import com.shamilov.core.components.data.repository.ComponentsRepositoryImpl
+import com.shamilov.core.components.domain.repository.ComponentsRepository
+import com.shamilov.core.components.domain.usecase.ComponentsUseCase
 import com.shamilov.core.presentation.auth.AuthScreen
 import com.shamilov.core.presentation.components.*
 import com.shamilov.core.presentation.verification.CodeVerificationScreen
@@ -43,21 +51,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         //temporary di
-        val prefs: AuthPreferences = AuthPreferencesImpl(this)
-        val httpClient = HttpClient.createHttpClient(prefs.getToken())
-        val api = httpClient.create(AuthNetworkApi::class.java)
-        val repository = AuthRepositoryImpl(api, prefs)
-        val useCase: AuthUseCase = AuthUseCaseImpl(repository)
-        authUseCase = useCase
-
-        if (useCase.isAuthorize.not()) {
-            lifecycleScope.launch {
-                useCase.createUser()
-                    .onFailure {
-                        Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
-                    }
-            }
-        }
+        load()
 
         setContent {
             val navController = rememberNavController()
@@ -75,6 +69,34 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun load() {
+        val prefs: AuthPreferences = AuthPreferencesImpl(this)
+        val httpClient = HttpClient.createHttpClient(prefs.getToken())
+        val api = httpClient.create(AuthNetworkApi::class.java)
+        val repository = AuthRepositoryImpl(api, prefs)
+        val useCase: AuthUseCase = AuthUseCaseImpl(repository)
+        authUseCase = useCase
+        val componentsApi = httpClient.create(ComponentsNetworkApi::class.java)
+        val componentsRepository: ComponentsRepository = ComponentsRepositoryImpl(componentsApi, ComponentsMapper(
+            HeaderComponentMapper(),
+            BannerComponentMapper()
+        ))
+        val componentsUseCase = ComponentsUseCase(componentsRepository)
+
+        if (useCase.isAuthorize.not()) {
+            lifecycleScope.launch {
+                useCase.createUser()
+                    .onFailure {
+                        Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+        lifecycleScope.launch {
+            componentsUseCase.getComponents()
+                .onFailure { Log.d("qwer", it.message.toString()) }
         }
     }
 }

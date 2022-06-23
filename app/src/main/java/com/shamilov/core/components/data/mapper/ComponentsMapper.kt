@@ -10,11 +10,11 @@ class ComponentsMapper(
     private val bannerComponentMapper: BannerComponentMapper,
 ) {
     fun mapComponents(components: List<ComponentResponse>): List<Component> {
-        return components.map { component ->
+        return components.mapNotNull { component ->
             when (component) {
                 is HeaderComponentResponse -> headerComponentMapper.mapHeaderComponent(component)
                 is BannerComponentResponse -> bannerComponentMapper.mapBannerComponent(component)
-                else -> error("The component $component is not available")
+                else -> null
             }
         }
     }

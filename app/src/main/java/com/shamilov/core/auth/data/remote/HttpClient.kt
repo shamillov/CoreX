@@ -1,9 +1,9 @@
 package com.shamilov.core.auth.data.remote
 
 import com.google.gson.GsonBuilder
+import com.shamilov.core.components.data.ComponentDeserializer
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -30,6 +30,7 @@ object HttpClient {
 
                     val gson = GsonBuilder()
                         .setLenient()
+                        .registerTypeAdapter(ComponentDeserializer::class.java, ComponentDeserializer())
                         .create()
 
                     retrofit = Retrofit.Builder()
