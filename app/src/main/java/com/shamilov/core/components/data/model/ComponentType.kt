@@ -7,7 +7,11 @@ import com.google.gson.annotations.SerializedName
  */
 enum class ComponentType {
     @SerializedName("header")
-    HEADER_COMPONENT,
+    header,
     @SerializedName("single_banner")
-    BANNER_COMPONENT,
+    single_banner,
+    @SerializedName("banner_list")
+    banner_list,
+    @SerializedName("cards")
+    cards,
 }
