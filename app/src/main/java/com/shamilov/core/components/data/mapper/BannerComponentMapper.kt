@@ -6,7 +6,9 @@ import com.shamilov.core.components.domain.model.BannerComponent
 class BannerComponentMapper {
     fun mapBannerComponent(response: BannerComponentResponse): BannerComponent {
         return BannerComponent(
-            response.image
+            image = response.image,
+            size = response.size,
+            deeplink = response.deeplink,
         )
     }
 }

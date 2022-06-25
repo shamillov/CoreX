@@ -1,5 +1,11 @@
 package com.shamilov.core.components.data.model
 
+import kotlinx.serialization.Serializable
+
+/**
+ * Not used
+ */
+@Serializable
 class UnknownComponentResponse(
-    type: ComponentType?,
-) : ComponentResponse(type)
+    override val type: String?,
+) : ComponentResponse()

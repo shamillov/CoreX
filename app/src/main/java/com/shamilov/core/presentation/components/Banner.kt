@@ -18,13 +18,17 @@ import com.shamilov.core.ui.theme.Dimens
 
 data class BannerViewData(
     val image: String,
-    val bannerHeight: Dp
+    val bannerSize: BannerSize
 )
+
+enum class BannerSize(val height: Dp) {
+    SMALL(100.dp), MEDIUM(200.dp), LARGE(300.dp),
+}
 
 @Composable
 fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val image = data.image
-    val bannerHeight = data.bannerHeight
+    val bannerSize = data.bannerSize
 
     AsyncImage(
         model = image,
@@ -35,7 +39,7 @@ fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick
             .padding(horizontal = 8.dp)
             .clip(RoundedCornerShape(Dimens.cornerRadius))
             .fillMaxWidth()
-            .height(bannerHeight)
+            .height(bannerSize.height)
             .clickable { onClick() }
     )
 }
@@ -43,7 +47,7 @@ fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick
 @Composable
 @Preview
 fun BannerComponentPreview() {
-    BannerComponent(data = BannerViewData(image = "", 100.dp)) {
+    BannerComponent(data = BannerViewData(image = "", BannerSize.SMALL)) {
 
     }
 }

@@ -1,14 +1,23 @@
 package com.shamilov.core.components.data.mapper
 
 import com.shamilov.core.components.data.model.BannersComponentResponse
+import com.shamilov.core.components.domain.model.BannerComponent
 import com.shamilov.core.components.domain.model.BannersComponent
 
-class BannersComponentMapper(
-    private val bannerComponentMapper: BannerComponentMapper,
-) {
+class BannersComponentMapper {
     fun mapBannersComponentResponse(response: BannersComponentResponse): BannersComponent {
         return BannersComponent(
-            items = response.items.map { bannerComponentMapper.mapBannerComponent(it) }
+            items = response.items.map { mapBannerComponentResponse(it) },
+        )
+    }
+
+    private fun mapBannerComponentResponse(
+        response: BannersComponentResponse.BannerComponentResponse,
+    ): BannerComponent {
+        return BannerComponent(
+            image = response.image,
+            size = response.size,
+            deeplink = response.deeplink,
         )
     }
 }

@@ -1,24 +1,16 @@
 package com.shamilov.core.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,18 +21,10 @@ import com.shamilov.core.auth.data.remote.HttpClient
 import com.shamilov.core.auth.data.repository.AuthRepositoryImpl
 import com.shamilov.core.auth.domain.usecase.AuthUseCase
 import com.shamilov.core.auth.domain.usecase.AuthUseCaseImpl
-import com.shamilov.core.components.data.mapper.BannerComponentMapper
-import com.shamilov.core.components.data.mapper.ComponentsMapper
-import com.shamilov.core.components.data.mapper.HeaderComponentMapper
-import com.shamilov.core.components.data.remote.ComponentsNetworkApi
-import com.shamilov.core.components.data.repository.ComponentsRepositoryImpl
-import com.shamilov.core.components.domain.repository.ComponentsRepository
-import com.shamilov.core.components.domain.usecase.ComponentsUseCase
 import com.shamilov.core.presentation.auth.AuthScreen
-import com.shamilov.core.presentation.components.*
+import com.shamilov.core.presentation.main.MainScreen
 import com.shamilov.core.presentation.verification.CodeVerificationScreen
 import com.shamilov.core.ui.theme.CoreTheme
-import com.shamilov.core.utils.DefaultSpacer
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -79,12 +63,14 @@ class MainActivity : ComponentActivity() {
         val repository = AuthRepositoryImpl(api, prefs)
         val useCase: AuthUseCase = AuthUseCaseImpl(repository)
         authUseCase = useCase
-        val componentsApi = httpClient.create(ComponentsNetworkApi::class.java)
-        val componentsRepository: ComponentsRepository = ComponentsRepositoryImpl(componentsApi, ComponentsMapper(
-            HeaderComponentMapper(),
-            BannerComponentMapper()
-        ))
-        val componentsUseCase = ComponentsUseCase(componentsRepository)
+//        val componentsApi = httpClient.create(ComponentsNetworkApi::class.java)
+//        val bannerComponentMapper = BannerComponentMapper()
+//        val componentsRepository: ComponentsRepository = ComponentsRepositoryImpl(componentsApi, ComponentsMapper(
+//            HeaderComponentMapper(),
+//            bannerComponentMapper,
+//            BannersComponentMapper(bannerComponentMapper)
+//        ) )
+//        val componentsUseCase = ComponentsUseCase(componentsRepository)
 
         if (useCase.isAuthorize.not()) {
             lifecycleScope.launch {
@@ -94,71 +80,10 @@ class MainActivity : ComponentActivity() {
                     }
             }
         }
-        lifecycleScope.launch {
-            componentsUseCase.getComponents()
-                .onFailure { Log.d("qwer", it.message.toString()) }
-        }
-    }
-}
-
-@Composable
-fun MainScreen(navController: NavController) {
-    Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
-    ) {
-        ToolbarComponent { navController.navigate("auth") }
-
-        BannerComponent(data = BannerViewData("", 100.dp)) { /* onClick() **/ }
-
-        DefaultSpacer()
-        HeaderComponent(data = HeaderViewData("Акции", "Скидка на заказ от 1000 ₽"))
-        DefaultSpacer(8.dp)
-        PromosComponent(
-            data = PromosViewData(
-                listOf(
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                    PromoViewData("", ""),
-                )
-            )
-        ) {
-
-        }
-
-        DefaultSpacer()
-        HeaderComponent(data = HeaderViewData("Вы заказывали ранее", null))
-        DefaultSpacer(8.dp)
-
-        LazyRow {
-            items(10) {
-                ProductComponent(
-                    data = ProductViewData(
-                        "image",
-                        "Пицца Пепперони",
-                        "319 ₽",
-                        "Из дади пицца"
-                    ), modifier = Modifier.padding(horizontal = 8.dp)
-                ) {
-
-                }
-            }
-        }
-
-        DefaultSpacer()
-        HeaderComponent(data = HeaderViewData("Азиатская кухня", null))
-        DefaultSpacer(8.dp)
-        BannerComponent(data = BannerViewData("", 160.dp)) { /* onClick() **/ }
-        DefaultSpacer()
-        HeaderComponent(data = HeaderViewData("Горячие блюда", "Закажи от 2000 ₽ и получи по ебалу в подарок"))
-        DefaultSpacer(8.dp)
-        BannerComponent(data = BannerViewData("", 100.dp)) { /* onClick() **/ }
-        DefaultSpacer()
-        BannerComponent(data = BannerViewData("", 100.dp)) { /* onClick() **/ }
+//        lifecycleScope.launch {
+//            componentsUseCase.getComponents()
+//                .onFailure { Log.d("qwer", it.message.toString()) }
+//        }
     }
 }
 

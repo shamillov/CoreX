@@ -18,7 +18,6 @@ data class CartProduct(
     val description: String,
     val price: Int,
     val rating: Int,
-    val media: Any,
 )
 
 data class CartOption(

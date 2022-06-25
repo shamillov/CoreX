@@ -33,7 +33,6 @@ class CartMapper {
             description = response.description,
             price = response.price,
             rating = response.rating,
-            media = response.media,
         )
     }
 

@@ -1,14 +1,13 @@
 package com.shamilov.core.auth.data.remote
 
-import com.google.gson.GsonBuilder
-import com.shamilov.core.components.data.ComponentDeserializer
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 object HttpClient {
-
     @Volatile
     private var retrofit: Retrofit? = null
 
@@ -28,14 +27,13 @@ object HttpClient {
                         .addInterceptor(headerInterceptor)
                         .build()
 
-                    val gson = GsonBuilder()
-                        .setLenient()
-                        .registerTypeAdapter(ComponentDeserializer::class.java, ComponentDeserializer())
-                        .create()
+                    val json = Json {
+                        ignoreUnknownKeys = true
+                    }
 
                     retrofit = Retrofit.Builder()
                         .baseUrl("http://192.168.1.230:8035/api/v1/")
-                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
                         .client(okHttpClient)
                         .build()
                 }
