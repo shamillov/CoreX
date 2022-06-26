@@ -10,8 +10,8 @@ import kotlinx.serialization.json.jsonPrimitive
 /**
  * When a new component appears, need to add a new type here
  */
-object ComponentPolymorphicDeserializer :
-    JsonContentPolymorphicSerializer<ComponentResponse>(ComponentResponse::class) {
+object ComponentPolymorphicDeserializer : JsonContentPolymorphicSerializer<ComponentResponse>(ComponentResponse::class) {
+
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out ComponentResponse> {
         return when (val type = element.jsonObject["type"]?.jsonPrimitive?.content) {
             ComponentType.HEADER_COMPONENT -> HeaderComponentResponse.serializer()

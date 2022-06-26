@@ -1,7 +1,6 @@
-package com.shamilov.core.presentation.auth
+package com.shamilov.core.auth.presentation.auth
 
 import android.widget.Toast
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,10 +20,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.shamilov.core.presentation.MainActivity
-import com.shamilov.core.presentation.auth.viewmodel.AuthEffect
-import com.shamilov.core.presentation.auth.viewmodel.AuthMessage
-import com.shamilov.core.presentation.auth.viewmodel.AuthViewModel
-import com.shamilov.core.presentation.auth.viewmodel.AuthViewModelFactory
+import com.shamilov.core.auth.presentation.auth.viewmodel.AuthEffect
+import com.shamilov.core.auth.presentation.auth.viewmodel.AuthMessage
+import com.shamilov.core.auth.presentation.auth.viewmodel.AuthViewModel
+import com.shamilov.core.auth.presentation.auth.viewmodel.AuthViewModelFactory
 import com.shamilov.core.utils.BackButton
 import com.shamilov.core.utils.DefaultSpacer
 import kotlinx.coroutines.flow.collectLatest

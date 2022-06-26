@@ -26,7 +26,7 @@ data class ProductViewData(
 )
 
 @Composable
-fun ProductComponent(data: ProductViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun ProductComposable(data: ProductViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val image = data.image
     val name = data.name
     val price = data.price
@@ -80,7 +80,7 @@ fun ProductComponentPreview() {
         "Из дади пицца"
     )
 
-    ProductComponent(data = data) {
+    ProductComposable(data = data) {
 
     }
 }

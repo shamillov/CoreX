@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.verification.viewmodel
+package com.shamilov.core.auth.presentation.verification.viewmodel
 
 sealed class VerificationMessage {
     class ValidateCode(val code: String) : VerificationMessage()

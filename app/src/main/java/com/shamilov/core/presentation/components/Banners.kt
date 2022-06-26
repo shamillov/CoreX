@@ -12,7 +12,7 @@ data class BannersViewData(
 fun BannersComposable(data: BannersViewData) {
     LazyRow {
         items(data.banners) {
-            BannerComponent(data = it) {
+            BannerComposable(data = it) {
 
             }
         }

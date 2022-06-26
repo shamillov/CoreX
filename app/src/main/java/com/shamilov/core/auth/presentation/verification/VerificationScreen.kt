@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.verification
+package com.shamilov.core.auth.presentation.verification
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.shamilov.core.presentation.MainActivity
-import com.shamilov.core.presentation.verification.viewmodel.VerificationViewModel
-import com.shamilov.core.presentation.verification.viewmodel.VerificationEffect
-import com.shamilov.core.presentation.verification.viewmodel.VerificationMessage
-import com.shamilov.core.presentation.verification.viewmodel.VerificationViewModelFactory
+import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModel
+import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationEffect
+import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationMessage
+import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModelFactory
 import com.shamilov.core.utils.BackButton
 import com.shamilov.core.utils.DefaultSpacer
 import kotlinx.coroutines.flow.collectLatest

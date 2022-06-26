@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ToolbarComponent(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun ToolbarComposable(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Box(modifier = modifier.fillMaxWidth()) {
         Icon(
             imageVector = Icons.Default.AccountCircle,

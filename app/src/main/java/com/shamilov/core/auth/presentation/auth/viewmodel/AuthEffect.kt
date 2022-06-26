@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.auth.viewmodel
+package com.shamilov.core.auth.presentation.auth.viewmodel
 
 sealed class AuthEffect {
     object NavigateBack : AuthEffect()

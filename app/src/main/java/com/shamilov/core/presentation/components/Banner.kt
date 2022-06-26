@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -18,21 +19,23 @@ import com.shamilov.core.ui.theme.Dimens
 
 data class BannerViewData(
     val image: String,
-    val bannerSize: BannerSize
-)
-
-enum class BannerSize(val height: Dp) {
-    SMALL(100.dp), MEDIUM(200.dp), LARGE(300.dp),
+    val bannerSize: BannerSize,
+    val deeplink: String,
+) {
+    enum class BannerSize(val height: Dp) {
+        SMALL(100.dp), MEDIUM(200.dp), LARGE(300.dp),
+    }
 }
 
 @Composable
-fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun BannerComposable(data: BannerViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val image = data.image
     val bannerSize = data.bannerSize
 
     AsyncImage(
         model = image,
         contentDescription = null,
+        contentScale = ContentScale.Crop,
         placeholder = ColorPainter(color = MaterialTheme.colorScheme.primaryContainer),
         error = ColorPainter(color = MaterialTheme.colorScheme.primaryContainer),
         modifier = modifier
@@ -47,7 +50,7 @@ fun BannerComponent(data: BannerViewData, modifier: Modifier = Modifier, onClick
 @Composable
 @Preview
 fun BannerComponentPreview() {
-    BannerComponent(data = BannerViewData(image = "", BannerSize.SMALL)) {
+    BannerComposable(data = BannerViewData(image = "", BannerViewData.BannerSize.SMALL, "")) {
 
     }
 }

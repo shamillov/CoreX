@@ -15,7 +15,7 @@ data class HeaderViewData(
 )
 
 @Composable
-fun HeaderComponent(data: HeaderViewData, modifier: Modifier = Modifier) {
+fun HeaderComposable(data: HeaderViewData, modifier: Modifier = Modifier) {
     val title = data.title
     val subtitle = data.subtitle
 
@@ -37,8 +37,8 @@ fun HeaderComponent(data: HeaderViewData, modifier: Modifier = Modifier) {
 @Preview
 fun HeaderComponentPreview() {
     Column {
-        HeaderComponent(data = HeaderViewData("Promo", null))
+        HeaderComposable(data = HeaderViewData("Promo", null))
         Spacer(modifier = Modifier.size(8.dp))
-        HeaderComponent(data = HeaderViewData("Популярное", "Доступно на закакз от 1000"))
+        HeaderComposable(data = HeaderViewData("Популярное", "Доступно на закакз от 1000"))
     }
 }

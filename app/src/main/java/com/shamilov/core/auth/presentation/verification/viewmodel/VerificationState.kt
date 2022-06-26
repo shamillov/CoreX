@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.verification.viewmodel
+package com.shamilov.core.auth.presentation.verification.viewmodel
 
 data class VerificationState(
     val isLoading: Boolean = false,

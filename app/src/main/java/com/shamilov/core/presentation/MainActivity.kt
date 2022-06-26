@@ -21,9 +21,9 @@ import com.shamilov.core.auth.data.remote.HttpClient
 import com.shamilov.core.auth.data.repository.AuthRepositoryImpl
 import com.shamilov.core.auth.domain.usecase.AuthUseCase
 import com.shamilov.core.auth.domain.usecase.AuthUseCaseImpl
-import com.shamilov.core.presentation.auth.AuthScreen
+import com.shamilov.core.auth.presentation.auth.AuthScreen
 import com.shamilov.core.presentation.main.MainScreen
-import com.shamilov.core.presentation.verification.CodeVerificationScreen
+import com.shamilov.core.auth.presentation.verification.CodeVerificationScreen
 import com.shamilov.core.ui.theme.CoreTheme
 import kotlinx.coroutines.launch
 

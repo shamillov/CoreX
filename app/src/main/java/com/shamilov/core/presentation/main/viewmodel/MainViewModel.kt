@@ -11,10 +11,12 @@ import com.shamilov.core.components.data.remote.ComponentsNetworkApi
 import com.shamilov.core.components.data.repository.ComponentsRepositoryImpl
 import com.shamilov.core.components.domain.repository.ComponentsRepository
 import com.shamilov.core.components.domain.usecase.ComponentsUseCase
+import com.shamilov.core.presentation.ComponentsViewDataMapper
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val componentsUseCase: ComponentsUseCase,
+    private val mapper: ComponentsViewDataMapper,
 ) : ViewModel() {
 
     private var _state = mutableStateOf<MainState>(MainState.Loading)
@@ -28,7 +30,8 @@ class MainViewModel(
         viewModelScope.launch {
             componentsUseCase.getComponents()
                 .onSuccess {
-                    _state.value = MainState.Loaded(it)
+                    val components = mapper.mapComponentsView(it)
+                    _state.value = MainState.Loaded(components)
                 }
                 .onFailure {
                     _state.value = MainState.Error(it.message.toString())
@@ -52,7 +55,8 @@ class MainViewModeFactory : ViewModelProvider.Factory {
             ),
         )
         val componentsUseCase = ComponentsUseCase(componentsRepository)
-        return MainViewModel(componentsUseCase) as T
+        val mapper = ComponentsViewDataMapper()
+        return MainViewModel(componentsUseCase, mapper) as T
     }
 
 }

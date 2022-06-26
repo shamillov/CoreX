@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.auth.viewmodel
+package com.shamilov.core.auth.presentation.auth.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

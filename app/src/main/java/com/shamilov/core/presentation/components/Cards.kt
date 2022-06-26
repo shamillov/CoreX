@@ -10,22 +10,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.shamilov.core.ui.theme.Dimens
 
-data class PromosViewData(
-    val promos: List<PromoViewData>,
+data class CardsViewData(
+    val cards: List<CardViewData>,
 )
 
-data class PromoViewData(
-    val id: String,
+data class CardViewData(
     val image: String,
+    val deeplink: String,
 )
 
 @Composable
-fun PromosComponent(data: PromosViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val promos = data.promos
+fun CardsComposable(data: CardsViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    val promos = data.cards
 
     LazyRow(
         modifier = modifier,
@@ -33,7 +34,7 @@ fun PromosComponent(data: PromosViewData, modifier: Modifier = Modifier, onClick
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(promos) { promo ->
-            PromoComponent(data = promo) {
+            CardComposable(data = promo) {
                 onClick()
             }
         }
@@ -41,7 +42,7 @@ fun PromosComponent(data: PromosViewData, modifier: Modifier = Modifier, onClick
 }
 
 @Composable
-fun PromoComponent(data: PromoViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun CardComposable(data: CardViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val image = data.image
 
     Box(
@@ -53,6 +54,7 @@ fun PromoComponent(data: PromoViewData, modifier: Modifier = Modifier, onClick: 
         AsyncImage(
             model = image,
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             placeholder = ColorPainter(color = MaterialTheme.colorScheme.primary),
             error = ColorPainter(color = MaterialTheme.colorScheme.primary),
         )
