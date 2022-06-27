@@ -24,14 +24,15 @@ import com.shamilov.core.auth.presentation.auth.viewmodel.AuthEffect
 import com.shamilov.core.auth.presentation.auth.viewmodel.AuthMessage
 import com.shamilov.core.auth.presentation.auth.viewmodel.AuthViewModel
 import com.shamilov.core.auth.presentation.auth.viewmodel.AuthViewModelFactory
-import com.shamilov.core.utils.BackButton
-import com.shamilov.core.utils.DefaultSpacer
+import com.shamilov.core.common.di.DaggerComponent
+import com.shamilov.core.presentation.utils.BackButton
+import com.shamilov.core.presentation.utils.DefaultSpacer
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AuthScreen(
     navController: NavController,
-    viewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory((LocalContext.current as MainActivity).authUseCase)),
+    viewModel: AuthViewModel = viewModel(factory = AuthViewModelFactory(((LocalContext.current as MainActivity).application as DaggerComponent).appComponent.authUseCase())),
 ) {
     val state = viewModel.state
     val message = viewModel::accept

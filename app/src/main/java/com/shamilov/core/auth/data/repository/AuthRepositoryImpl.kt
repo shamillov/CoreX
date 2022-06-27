@@ -7,8 +7,9 @@ import com.shamilov.core.auth.data.model.requests.PhoneRequest
 import com.shamilov.core.auth.data.model.requests.UuidRequest
 import com.shamilov.core.auth.data.remote.AuthNetworkApi
 import com.shamilov.core.auth.domain.repository.AuthRepository
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val api: AuthNetworkApi,
     private val prefs: AuthPreferences,
 ) : AuthRepository {
@@ -56,6 +57,7 @@ class AuthRepositoryImpl(
                 error(response.message())
             }
         } catch (e: Throwable) {
+            e.printStackTrace()
             Result.failure(e)
         }
     }

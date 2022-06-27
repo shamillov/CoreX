@@ -8,8 +8,9 @@ import com.shamilov.core.cart.domain.models.Cart
 import com.shamilov.core.cart.domain.models.CartItem
 import com.shamilov.core.cart.domain.models.CartProduct
 import com.shamilov.core.cart.domain.models.CartOption
+import javax.inject.Inject
 
-class CartMapper {
+class CartMapper @Inject constructor() {
     fun mapCartResponse(response: CartResponse): Cart {
         return Cart(
             items = response.items.map { mapCartItemResponse(it) },

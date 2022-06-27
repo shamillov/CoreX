@@ -2,6 +2,7 @@ package com.shamilov.core.auth.data.local
 
 import android.content.Context
 import java.util.*
+import javax.inject.Inject
 
 interface AuthPreferences {
     fun getToken(): String?
@@ -10,7 +11,7 @@ interface AuthPreferences {
     fun getUUID(): String
 }
 
-class AuthPreferencesImpl(
+class AuthPreferencesImpl @Inject constructor(
     context: Context,
 ) : AuthPreferences {
 

@@ -2,12 +2,13 @@ package com.shamilov.core.presentation
 
 import com.shamilov.core.components.domain.model.*
 import com.shamilov.core.presentation.components.*
+import javax.inject.Inject
 
 private const val BANNER_SMALL = "small"
 private const val BANNER_MEDIUM = "medium"
 private const val BANNER_LARGE = "large"
 
-class ComponentsViewDataMapper {
+class ComponentsViewDataMapper @Inject constructor() {
 
     fun mapComponentsView(components: List<Component>): List<Any> {
         val list = mutableListOf<Any>()

@@ -1,4 +1,4 @@
-package com.shamilov.core.utils
+package com.shamilov.core.presentation.utils
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

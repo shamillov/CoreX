@@ -4,8 +4,9 @@ import com.shamilov.core.cart.data.mapper.CartMapper
 import com.shamilov.core.cart.data.remote.CartNetworkApi
 import com.shamilov.core.cart.domain.models.Cart
 import com.shamilov.core.cart.domain.repository.CartRepository
+import javax.inject.Inject
 
-class CartRepositoryImpl(
+class CartRepositoryImpl @Inject constructor(
     private val api: CartNetworkApi,
     private val mapper: CartMapper,
 ) : CartRepository {

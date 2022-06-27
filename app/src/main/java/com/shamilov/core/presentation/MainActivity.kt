@@ -14,27 +14,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shamilov.core.auth.data.local.AuthPreferences
-import com.shamilov.core.auth.data.local.AuthPreferencesImpl
-import com.shamilov.core.auth.data.remote.AuthNetworkApi
-import com.shamilov.core.auth.data.remote.HttpClient
-import com.shamilov.core.auth.data.repository.AuthRepositoryImpl
-import com.shamilov.core.auth.domain.usecase.AuthUseCase
-import com.shamilov.core.auth.domain.usecase.AuthUseCaseImpl
+import com.shamilov.core.App
 import com.shamilov.core.auth.presentation.auth.AuthScreen
 import com.shamilov.core.presentation.main.MainScreen
 import com.shamilov.core.auth.presentation.verification.CodeVerificationScreen
+import com.shamilov.core.common.di.DaggerComponent
 import com.shamilov.core.ui.theme.CoreTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
-    lateinit var authUseCase: AuthUseCase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //temporary di
         load()
 
         setContent {
@@ -44,7 +36,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     NavHost(navController = navController, startDestination = "main") {
                         composable("main") { MainScreen(navController) }
@@ -57,20 +49,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun load() {
-        val prefs: AuthPreferences = AuthPreferencesImpl(this)
-        val httpClient = HttpClient.createHttpClient(prefs.getToken())
-        val api = httpClient.create(AuthNetworkApi::class.java)
-        val repository = AuthRepositoryImpl(api, prefs)
-        val useCase: AuthUseCase = AuthUseCaseImpl(repository)
-        authUseCase = useCase
-//        val componentsApi = httpClient.create(ComponentsNetworkApi::class.java)
-//        val bannerComponentMapper = BannerComponentMapper()
-//        val componentsRepository: ComponentsRepository = ComponentsRepositoryImpl(componentsApi, ComponentsMapper(
-//            HeaderComponentMapper(),
-//            bannerComponentMapper,
-//            BannersComponentMapper(bannerComponentMapper)
-//        ) )
-//        val componentsUseCase = ComponentsUseCase(componentsRepository)
+        val useCase = (application as DaggerComponent).appComponent.authUseCase()
 
         if (useCase.isAuthorize.not()) {
             lifecycleScope.launch {
@@ -80,10 +59,6 @@ class MainActivity : ComponentActivity() {
                     }
             }
         }
-//        lifecycleScope.launch {
-//            componentsUseCase.getComponents()
-//                .onFailure { Log.d("qwer", it.message.toString()) }
-//        }
     }
 }
 

@@ -2,8 +2,9 @@ package com.shamilov.core.components.data.mapper
 
 import com.shamilov.core.components.data.model.*
 import com.shamilov.core.components.domain.model.Component
+import javax.inject.Inject
 
-class ComponentsMapper(
+class ComponentsMapper @Inject constructor(
     private val headerComponentMapper: HeaderComponentMapper,
     private val bannerComponentMapper: BannerComponentMapper,
     private val bannersComponentMapper: BannersComponentMapper,

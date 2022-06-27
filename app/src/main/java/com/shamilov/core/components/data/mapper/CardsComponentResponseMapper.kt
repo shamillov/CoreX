@@ -3,8 +3,9 @@ package com.shamilov.core.components.data.mapper
 import com.shamilov.core.components.data.model.CardsComponentResponse
 import com.shamilov.core.components.domain.model.CardComponent
 import com.shamilov.core.components.domain.model.CardsComponent
+import javax.inject.Inject
 
-class CardsComponentResponseMapper {
+class CardsComponentResponseMapper @Inject constructor() {
     fun mapCardsComponentResponse(response: CardsComponentResponse): CardsComponent {
         return CardsComponent(
             cards = response.items.map { mapCardComponentResponse(it) }

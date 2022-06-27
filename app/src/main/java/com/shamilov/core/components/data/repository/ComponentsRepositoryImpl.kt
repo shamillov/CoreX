@@ -4,8 +4,9 @@ import com.shamilov.core.components.data.mapper.ComponentsMapper
 import com.shamilov.core.components.data.remote.ComponentsNetworkApi
 import com.shamilov.core.components.domain.model.Component
 import com.shamilov.core.components.domain.repository.ComponentsRepository
+import javax.inject.Inject
 
-class ComponentsRepositoryImpl(
+class ComponentsRepositoryImpl @Inject constructor(
     private val api: ComponentsNetworkApi,
     private val mapper: ComponentsMapper,
 ) : ComponentsRepository {

@@ -1,6 +1,7 @@
 package com.shamilov.core.auth.domain.usecase
 
 import com.shamilov.core.auth.domain.repository.AuthRepository
+import javax.inject.Inject
 
 interface AuthUseCase {
     val isAuthorize: Boolean
@@ -9,7 +10,7 @@ interface AuthUseCase {
     suspend fun sendCode(code: String): Result<Unit>
 }
 
-class AuthUseCaseImpl(
+class AuthUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository,
 ) : AuthUseCase {
 

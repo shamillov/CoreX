@@ -25,14 +25,15 @@ import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationVi
 import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationEffect
 import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationMessage
 import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModelFactory
-import com.shamilov.core.utils.BackButton
-import com.shamilov.core.utils.DefaultSpacer
+import com.shamilov.core.common.di.DaggerComponent
+import com.shamilov.core.presentation.utils.BackButton
+import com.shamilov.core.presentation.utils.DefaultSpacer
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun CodeVerificationScreen(
     navController: NavController,
-    viewModel: VerificationViewModel = viewModel(factory = VerificationViewModelFactory((LocalContext.current as MainActivity).authUseCase))
+    viewModel: VerificationViewModel = viewModel(factory = VerificationViewModelFactory(((LocalContext.current as MainActivity).application as DaggerComponent).appComponent.authUseCase()))
 ) {
     val state = viewModel.state
     val message = viewModel::accept
