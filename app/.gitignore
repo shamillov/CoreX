@@ -1,1 +1,10 @@
-/build
+#Gradle files
+.gradle/
+build/
+outputs/
+
+#Local configuration files
+local.properties
+
+#IDEA files
+.idae/
