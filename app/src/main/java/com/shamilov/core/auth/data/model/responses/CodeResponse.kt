@@ -9,5 +9,5 @@ class CodeResponse(
     val code: String,
     val token: String,
     @SerialName("time_left")
-    val timeLeft: String,
+    val timeLeft: Int,
 )

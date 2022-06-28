@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.components
+package com.shamilov.core.components.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

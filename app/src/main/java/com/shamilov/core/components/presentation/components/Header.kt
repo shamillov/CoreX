@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.components
+package com.shamilov.core.components.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shamilov.core.ui.theme.Dimens
+import com.shamilov.core.common.ui.theme.Dimens
 
 data class HeaderViewData(
     val title: String,

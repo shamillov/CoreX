@@ -1,4 +1,4 @@
-package com.shamilov.core.ui.theme
+package com.shamilov.core.common.ui.theme
 
 import android.app.Activity
 import android.os.Build

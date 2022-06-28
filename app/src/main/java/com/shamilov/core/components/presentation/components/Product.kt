@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.components
+package com.shamilov.core.components.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.shamilov.core.ui.theme.Dimens
+import com.shamilov.core.common.ui.theme.Dimens
 
 data class ProductViewData(
     val image: String,

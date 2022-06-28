@@ -1,4 +1,4 @@
-package com.shamilov.core.ui.theme
+package com.shamilov.core.common.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

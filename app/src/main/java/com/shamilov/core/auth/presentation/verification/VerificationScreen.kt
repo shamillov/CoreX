@@ -8,7 +8,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -18,22 +20,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.shamilov.core.presentation.MainActivity
-import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModel
 import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationEffect
 import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationMessage
-import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModelFactory
-import com.shamilov.core.common.di.DaggerComponent
-import com.shamilov.core.presentation.utils.BackButton
-import com.shamilov.core.presentation.utils.DefaultSpacer
+import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModel
+import com.shamilov.core.common.ui.composable.BackButton
+import com.shamilov.core.common.ui.composable.DefaultSpacer
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun CodeVerificationScreen(
     navController: NavController,
-    viewModel: VerificationViewModel = viewModel(factory = VerificationViewModelFactory(((LocalContext.current as MainActivity).application as DaggerComponent).appComponent.authUseCase()))
+    viewModel: VerificationViewModel,
 ) {
     val state = viewModel.state
     val message = viewModel::accept
@@ -55,8 +53,7 @@ fun CodeVerificationScreen(
                 onValueChange = { message(VerificationMessage.ValidateCode(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .focusRequester(focusRequester)
-                ,
+                    .focusRequester(focusRequester),
                 shape = CircleShape,
                 label = {
                     Text(text = "Enter your code")

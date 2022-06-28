@@ -1,7 +1,6 @@
-package com.shamilov.core.presentation
+package com.shamilov.core.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,24 +9,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shamilov.core.App
 import com.shamilov.core.auth.presentation.auth.AuthScreen
-import com.shamilov.core.presentation.main.MainScreen
 import com.shamilov.core.auth.presentation.verification.CodeVerificationScreen
-import com.shamilov.core.common.di.DaggerComponent
-import com.shamilov.core.ui.theme.CoreTheme
-import kotlinx.coroutines.launch
+import com.shamilov.core.common.di.daggerComponent
+import com.shamilov.core.common.ui.theme.CoreTheme
+import com.shamilov.core.main.presentation.MainScreen
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        load()
 
         setContent {
             val navController = rememberNavController()
@@ -39,24 +34,26 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     NavHost(navController = navController, startDestination = "main") {
-                        composable("main") { MainScreen(navController) }
-                        composable("auth") { AuthScreen(navController) }
-                        composable("verification") { CodeVerificationScreen(navController) }
+                        composable("main") {
+                            MainScreen(
+                                navController,
+                                viewModel(factory = daggerComponent.viewModelFactory)
+                            )
+                        }
+                        composable("auth") {
+                            AuthScreen(
+                                navController,
+                                viewModel(factory = daggerComponent.viewModelFactory)
+                            )
+                        }
+                        composable("verification") {
+                            CodeVerificationScreen(
+                                navController,
+                                viewModel(factory = daggerComponent.viewModelFactory)
+                            )
+                        }
                     }
                 }
-            }
-        }
-    }
-
-    private fun load() {
-        val useCase = (application as DaggerComponent).appComponent.authUseCase()
-
-        if (useCase.isAuthorize.not()) {
-            lifecycleScope.launch {
-                useCase.createUser()
-                    .onFailure {
-                        Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_SHORT).show()
-                    }
             }
         }
     }
@@ -66,6 +63,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     CoreTheme {
-        MainScreen(rememberNavController())
+//        MainScreen(rememberNavController())
     }
 }

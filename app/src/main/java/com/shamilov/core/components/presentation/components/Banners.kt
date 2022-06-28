@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.components
+package com.shamilov.core.components.presentation.components
 
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items

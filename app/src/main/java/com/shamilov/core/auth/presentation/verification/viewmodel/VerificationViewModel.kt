@@ -4,15 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.shamilov.core.auth.domain.usecase.AuthUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class VerificationViewModel(
+class VerificationViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
 ) : ViewModel() {
 
@@ -62,11 +62,5 @@ class VerificationViewModel(
             code = code,
             buttonEnabled = isValid
         )
-    }
-}
-
-class VerificationViewModelFactory(private val authUseCase: AuthUseCase) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return VerificationViewModel(authUseCase) as T
     }
 }

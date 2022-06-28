@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.main
+package com.shamilov.core.main.presentation
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -6,21 +6,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.shamilov.core.common.di.DaggerComponent
-import com.shamilov.core.presentation.MainActivity
-import com.shamilov.core.presentation.components.*
-import com.shamilov.core.presentation.main.viewmodel.MainState
-import com.shamilov.core.presentation.main.viewmodel.MainViewModeFactory
-import com.shamilov.core.presentation.main.viewmodel.MainViewModel
-import com.shamilov.core.presentation.utils.DefaultSpacer
+import com.shamilov.core.common.ui.composable.DefaultSpacer
+import com.shamilov.core.components.presentation.components.*
+import com.shamilov.core.main.presentation.viewmodel.MainState
+import com.shamilov.core.main.presentation.viewmodel.MainViewModel
 
 @Composable
 fun MainScreen(
     navController: NavController,
-    viewModel: MainViewModel = viewModel(factory = MainViewModeFactory(((LocalContext.current as MainActivity).application as DaggerComponent).appComponent))
+    viewModel: MainViewModel,
 ) {
     val state = viewModel.state
 

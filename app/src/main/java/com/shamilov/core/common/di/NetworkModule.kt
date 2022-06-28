@@ -9,10 +9,17 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import javax.inject.Qualifier
+import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class AuthInterceptor
 
 @Module
 class NetworkModule {
     @Provides
+    @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         json: Json,
@@ -25,7 +32,9 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(
+        @AuthInterceptor
         tokenInterceptor: Interceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
@@ -34,6 +43,8 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
+    @AuthInterceptor
     fun provideTokenInterceptor(
         authPreferences: AuthPreferences,
     ): Interceptor {
@@ -48,5 +59,6 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideJsonSerializer() = Json { ignoreUnknownKeys = true }
 }

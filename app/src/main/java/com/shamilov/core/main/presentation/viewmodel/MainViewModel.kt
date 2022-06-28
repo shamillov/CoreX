@@ -1,25 +1,30 @@
-package com.shamilov.core.presentation.main.viewmodel
+package com.shamilov.core.main.presentation.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.shamilov.core.auth.domain.usecase.AuthUseCase
 import com.shamilov.core.components.domain.usecase.ComponentsUseCase
-import com.shamilov.core.di.AppComponent
-import com.shamilov.core.presentation.ComponentsViewDataMapper
+import com.shamilov.core.components.presentation.mapper.ComponentsViewDataMapper
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(
+class MainViewModel @Inject constructor(
     private val componentsUseCase: ComponentsUseCase,
     private val mapper: ComponentsViewDataMapper,
+    private val authUseCase: AuthUseCase,
 ) : ViewModel() {
 
     private var _state = mutableStateOf<MainState>(MainState.Loading)
     val state: State<MainState> = _state
 
     init {
-        loadComponents()
+        if (authUseCase.isAuthorize) {
+            loadComponents()
+        } else {
+            createUser()
+        }
     }
 
     private fun loadComponents() {
@@ -34,10 +39,12 @@ class MainViewModel(
                 }
         }
     }
-}
 
-class MainViewModeFactory(private val appComponent: AppComponent) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainViewModel(appComponent.getComponentUseCase(), appComponent.getComponentMapper()) as T
+    private fun createUser() {
+        viewModelScope.launch {
+            authUseCase.createUser()
+                .onSuccess { loadComponents() }
+                .onFailure { _state.value = MainState.Error(it.message.orEmpty()) }
+        }
     }
 }

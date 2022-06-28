@@ -4,15 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.shamilov.core.auth.domain.usecase.AuthUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel(
+class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
 ) : ViewModel() {
 
@@ -58,11 +58,5 @@ class AuthViewModel(
         viewModelScope.launch {
             _effect.emit(AuthEffect.NavigateBack)
         }
-    }
-}
-
-class AuthViewModelFactory(private val authUseCase: AuthUseCase) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AuthViewModel(authUseCase) as T
     }
 }

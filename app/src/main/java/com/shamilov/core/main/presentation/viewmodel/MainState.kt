@@ -1,4 +1,4 @@
-package com.shamilov.core.presentation.main.viewmodel
+package com.shamilov.core.main.presentation.viewmodel
 
 sealed class MainState {
     object Loading : MainState()

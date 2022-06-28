@@ -1,7 +1,7 @@
-package com.shamilov.core.presentation
+package com.shamilov.core.components.presentation.mapper
 
 import com.shamilov.core.components.domain.model.*
-import com.shamilov.core.presentation.components.*
+import com.shamilov.core.components.presentation.components.*
 import javax.inject.Inject
 
 private const val BANNER_SMALL = "small"
