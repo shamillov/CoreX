@@ -1,5 +1,6 @@
 package com.shamilov.core.auth.data.repository
 
+import android.util.Base64
 import android.util.Log
 import com.shamilov.core.auth.data.local.AuthPreferences
 import com.shamilov.core.auth.data.model.requests.CodeRequest
@@ -7,6 +8,9 @@ import com.shamilov.core.auth.data.model.requests.PhoneRequest
 import com.shamilov.core.auth.data.model.requests.UuidRequest
 import com.shamilov.core.auth.data.remote.AuthNetworkApi
 import com.shamilov.core.auth.domain.repository.AuthRepository
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -18,6 +22,9 @@ class AuthRepositoryImpl @Inject constructor(
 
     override val isAuthorize: Boolean
         get() = prefs.getToken() != null
+
+    override val isFullUser: Boolean
+        get() = checkUserRule()
 
     override suspend fun createUser(): Result<Unit> {
         val uuid = prefs.getUUID()
@@ -80,5 +87,26 @@ class AuthRepositoryImpl @Inject constructor(
         } catch (e: Throwable) {
             Result.failure(e)
         }
+    }
+
+    /**
+     * Return true if user is registered with phone
+     */
+    private fun checkUserRule(): Boolean {
+        val token = prefs.getToken() ?: error("Token not must be null")
+        val tokenSegments = token.split(".")
+
+        for (segment in 0..tokenSegments.size) {
+            try {
+                val userProperties = Base64.decode(tokenSegments[segment], 0).decodeToString()
+                val jsonElement = Json.parseToJsonElement(userProperties).jsonObject["nfc"] ?: continue
+                val isNotFullUser = jsonElement.jsonPrimitive.content
+
+                return isNotFullUser.toBoolean()
+            } catch (e: Throwable) {
+                continue
+            }
+        }
+        return false
     }
 }

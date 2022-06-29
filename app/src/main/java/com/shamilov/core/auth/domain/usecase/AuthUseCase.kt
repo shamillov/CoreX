@@ -5,6 +5,7 @@ import javax.inject.Inject
 
 interface AuthUseCase {
     val isAuthorize: Boolean
+    val isFullUser: Boolean
     suspend fun createUser(): Result<Unit>
     suspend fun sendPhone(phone: String): Result<Unit>
     suspend fun sendCode(code: String): Result<Unit>
@@ -16,6 +17,8 @@ class AuthUseCaseImpl @Inject constructor(
 
     override val isAuthorize: Boolean
         get() = authRepository.isAuthorize
+    override val isFullUser: Boolean
+        get() = authRepository.isFullUser
 
     override suspend fun createUser(): Result<Unit> {
         return authRepository.createUser()

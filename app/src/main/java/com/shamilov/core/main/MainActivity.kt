@@ -17,7 +17,8 @@ import com.shamilov.core.auth.presentation.auth.AuthScreen
 import com.shamilov.core.auth.presentation.verification.CodeVerificationScreen
 import com.shamilov.core.common.di.daggerComponent
 import com.shamilov.core.common.ui.theme.CoreTheme
-import com.shamilov.core.main.presentation.MainScreen
+import com.shamilov.core.components.presentation.MainScreen
+import com.shamilov.core.profile.presentation.ProfileScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val viewModelFactory = daggerComponent.viewModelFactory
 
             CoreTheme {
                 // A surface container using the 'background' color from the theme
@@ -36,20 +38,26 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "main") {
                         composable("main") {
                             MainScreen(
-                                navController,
-                                viewModel(factory = daggerComponent.viewModelFactory)
+                                navController = navController,
+                                viewModel = viewModel(factory = viewModelFactory),
                             )
                         }
                         composable("auth") {
                             AuthScreen(
-                                navController,
-                                viewModel(factory = daggerComponent.viewModelFactory)
+                                navController = navController,
+                                viewModel = viewModel(factory = viewModelFactory),
                             )
                         }
                         composable("verification") {
                             CodeVerificationScreen(
-                                navController,
-                                viewModel(factory = daggerComponent.viewModelFactory)
+                                navController = navController,
+                                viewModel = viewModel(factory = viewModelFactory),
+                            )
+                        }
+                        composable("profile") {
+                            ProfileScreen(
+                                navController = navController,
+                                viewModel = viewModel(factory = viewModelFactory),
                             )
                         }
                     }

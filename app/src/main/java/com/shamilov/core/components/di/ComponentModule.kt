@@ -7,7 +7,7 @@ import com.shamilov.core.components.data.repository.ComponentsRepositoryImpl
 import com.shamilov.core.components.domain.repository.ComponentsRepository
 import com.shamilov.core.components.domain.usecase.ComponentsUseCase
 import com.shamilov.core.components.domain.usecase.ComponentsUseCaseImpl
-import com.shamilov.core.main.presentation.viewmodel.MainViewModel
+import com.shamilov.core.components.presentation.viewmodel.ComponentsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,8 +25,8 @@ interface ComponentModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+    @ViewModelKey(ComponentsViewModel::class)
+    fun bindMainViewModel(viewModel: ComponentsViewModel): ViewModel
 
     companion object {
         @Provides
