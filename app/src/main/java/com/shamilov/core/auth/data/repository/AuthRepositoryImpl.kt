@@ -15,19 +15,19 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val api: AuthNetworkApi,
-    private val prefs: AuthPreferences,
+    private val authPrefs: AuthPreferences,
 ) : AuthRepository {
 
     private var verifyToken: String? = null
 
     override val isAuthorize: Boolean
-        get() = prefs.getToken() != null
+        get() = authPrefs.getToken() != null
 
     override val isFullUser: Boolean
         get() = checkUserRule()
 
     override suspend fun createUser(): Result<Unit> {
-        val uuid = prefs.getUUID()
+        val uuid = authPrefs.getUUID()
         val request = UuidRequest(uuid = uuid)
 
         return try {
@@ -36,7 +36,7 @@ class AuthRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful && body != null) {
                 val token = body.data.accessToken
-                prefs.saveToken(token)
+                authPrefs.saveToken(token)
 
                 Result.success(Unit)
             } else {
@@ -78,7 +78,7 @@ class AuthRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful && body != null) {
                 val accessToken = body.data.accessToken
-                prefs.saveToken(accessToken)
+                authPrefs.saveToken(accessToken)
 
                 Result.success(Unit)
             } else {
@@ -89,11 +89,18 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun logout(): Result<Unit> {
+        authPrefs.removeToken()
+        authPrefs.removeUUID()
+
+        return createUser()
+    }
+
     /**
      * Return true if user is registered with phone
      */
     private fun checkUserRule(): Boolean {
-        val token = prefs.getToken() ?: error("Token not must be null")
+        val token = authPrefs.getToken() ?: error("Token not must be null")
         val tokenSegments = token.split(".")
 
         for (segment in 0..tokenSegments.size) {
@@ -102,7 +109,7 @@ class AuthRepositoryImpl @Inject constructor(
                 val jsonElement = Json.parseToJsonElement(userProperties).jsonObject["nfc"] ?: continue
                 val isNotFullUser = jsonElement.jsonPrimitive.content
 
-                return isNotFullUser.toBoolean()
+                return !isNotFullUser.toBoolean()
             } catch (e: Throwable) {
                 continue
             }

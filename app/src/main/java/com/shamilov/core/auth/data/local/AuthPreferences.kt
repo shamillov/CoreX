@@ -9,6 +9,7 @@ interface AuthPreferences {
     fun saveToken(token: String)
     fun removeToken()
     fun getUUID(): String
+    fun removeUUID()
 }
 
 class AuthPreferencesImpl @Inject constructor(
@@ -42,6 +43,12 @@ class AuthPreferencesImpl @Inject constructor(
 
     override fun getUUID(): String {
         return sharedPreferences.getString(KEY_UUID, null) ?: createAndSaveUUID()
+    }
+
+    override fun removeUUID() {
+        sharedPreferences.edit()
+            .remove(KEY_UUID)
+            .apply()
     }
 
     private fun createAndSaveUUID(): String {

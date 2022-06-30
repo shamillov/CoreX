@@ -4,8 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -25,6 +23,7 @@ import com.shamilov.core.auth.presentation.auth.viewmodel.AuthMessage
 import com.shamilov.core.auth.presentation.auth.viewmodel.AuthViewModel
 import com.shamilov.core.common.ui.composable.BackButton
 import com.shamilov.core.common.ui.composable.DefaultSpacer
+import com.shamilov.core.common.ui.composable.LoadingButton
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -44,42 +43,35 @@ fun AuthScreen(
         Column(
             modifier = Modifier
                 .align(alignment = Alignment.Center)
-                .padding(32.dp)
+                .padding(16.dp)
         ) {
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
                     .focusRequester(focusRequester),
                 shape = CircleShape,
-                label = {
-                    Text(text = "Enter your phone number")
-                },
+                label = { Text(text = "Enter your phone number") },
                 enabled = state.phoneFieldEnabled,
                 maxLines = 1,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             DefaultSpacer()
-            Button(
+
+            LoadingButton(
+                isEnabled = state.buttonEnabled,
+                isLoading = state.isLoading,
+                buttonText = "Send message",
                 onClick = { message(AuthMessage.SendPhone(phoneNumber)) },
-                enabled = state.buttonEnabled,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-            ) {
-                if (state.isLoading) {
-                    CircularProgressIndicator()
-                } else {
-                    Text(text = "Send message")
-                }
-            }
+            )
 
             DefaultSpacer()
             Text(
                 text = "При входе или регистрации, вы принимаете условия пользовательского соглашения",
                 textAlign = TextAlign.Center,
-                fontSize = 12.sp
+                fontSize = 12.sp,
             )
         }
     }
