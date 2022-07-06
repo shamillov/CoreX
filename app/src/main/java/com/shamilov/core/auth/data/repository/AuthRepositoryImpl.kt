@@ -90,10 +90,20 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logout(): Result<Unit> {
-        authPrefs.removeToken()
-        authPrefs.removeUUID()
+        return try {
+            val response = api.logout()
 
-        return createUser()
+            if (response.isSuccessful) {
+                authPrefs.removeToken()
+                authPrefs.removeUUID()
+
+                createUser()
+            } else {
+                error(response.message())
+            }
+        } catch (e: Throwable) {
+            Result.failure(e)
+        }
     }
 
     /**
@@ -106,10 +116,10 @@ class AuthRepositoryImpl @Inject constructor(
         for (segment in 0..tokenSegments.size) {
             try {
                 val userProperties = Base64.decode(tokenSegments[segment], 0).decodeToString()
-                val jsonElement = Json.parseToJsonElement(userProperties).jsonObject["nfc"] ?: continue
-                val isNotFullUser = jsonElement.jsonPrimitive.content
+                val jsonElement = Json.parseToJsonElement(userProperties).jsonObject["fc"] ?: continue
+                val isFullUser = jsonElement.jsonPrimitive.content
 
-                return !isNotFullUser.toBoolean()
+                return isFullUser.toBoolean()
             } catch (e: Throwable) {
                 continue
             }
