@@ -5,9 +5,11 @@ import javax.inject.Inject
 
 interface AuthUseCase {
     val isAuthorize: Boolean
+    val isFullUser: Boolean
     suspend fun createUser(): Result<Unit>
     suspend fun sendPhone(phone: String): Result<Unit>
     suspend fun sendCode(code: String): Result<Unit>
+    suspend fun logout(): Result<Unit>
 }
 
 class AuthUseCaseImpl @Inject constructor(
@@ -16,6 +18,8 @@ class AuthUseCaseImpl @Inject constructor(
 
     override val isAuthorize: Boolean
         get() = authRepository.isAuthorize
+    override val isFullUser: Boolean
+        get() = authRepository.isFullUser
 
     override suspend fun createUser(): Result<Unit> {
         return authRepository.createUser()
@@ -27,5 +31,9 @@ class AuthUseCaseImpl @Inject constructor(
 
     override suspend fun sendCode(code: String): Result<Unit> {
         return authRepository.sendCode(code)
+    }
+
+    override suspend fun logout(): Result<Unit> {
+        return authRepository.logout()
     }
 }

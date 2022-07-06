@@ -4,8 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +24,7 @@ import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationMe
 import com.shamilov.core.auth.presentation.verification.viewmodel.VerificationViewModel
 import com.shamilov.core.common.ui.composable.BackButton
 import com.shamilov.core.common.ui.composable.DefaultSpacer
+import com.shamilov.core.common.ui.composable.LoadingButton
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -46,36 +45,29 @@ fun CodeVerificationScreen(
         Column(
             modifier = Modifier
                 .align(alignment = Alignment.Center)
-                .padding(32.dp)
+                .padding(16.dp)
         ) {
             OutlinedTextField(
                 value = state.code,
                 onValueChange = { message(VerificationMessage.ValidateCode(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
                     .focusRequester(focusRequester),
                 shape = CircleShape,
-                label = {
-                    Text(text = "Enter your code")
-                },
+                label = { Text(text = "Enter your code") },
                 enabled = state.codeFieldEnabled,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             DefaultSpacer()
-            Button(
+
+            LoadingButton(
+                isEnabled = state.buttonEnabled,
+                isLoading = state.isLoading,
+                buttonText = "Send code",
                 onClick = { message(VerificationMessage.SendCode) },
-                enabled = state.buttonEnabled,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-            ) {
-                if (state.isLoading) {
-                    CircularProgressIndicator()
-                } else {
-                    Text(text = "Send code")
-                }
-            }
+            )
 
             DefaultSpacer()
             Text(
@@ -94,7 +86,7 @@ fun CodeVerificationScreen(
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is VerificationEffect.OpenUserProfileScreen -> {
-                    navController.navigate("main")
+                    navController.popBackStack("main", inclusive = false)
                 }
                 is VerificationEffect.NavigateBack -> navController.navigateUp()
                 is VerificationEffect.ShowErrorMessage -> {
