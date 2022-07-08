@@ -8,16 +8,17 @@ import javax.inject.Inject
 class BannersComponentMapper @Inject constructor() {
     fun mapBannersComponentResponse(response: BannersComponentResponse): BannersComponent {
         return BannersComponent(
-            items = response.items.map { mapBannerComponentResponse(it) },
+            items = response.items.map { mapBannerComponentResponse(it, response.size) },
         )
     }
 
     private fun mapBannerComponentResponse(
         response: BannersComponentResponse.BannerComponentResponse,
+        size: String,
     ): BannerComponent {
         return BannerComponent(
             image = response.image,
-            size = response.size,
+            size = size,
             deeplink = response.deeplink,
         )
     }

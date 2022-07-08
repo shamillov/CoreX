@@ -73,7 +73,7 @@ fun CodeVerificationScreen(
             Text(
                 text = "При входе или регистрации, вы принимаете условия пользовательского соглашения",
                 textAlign = TextAlign.Center,
-                fontSize = 12.sp
+                fontSize = 12.sp,
             )
         }
     }

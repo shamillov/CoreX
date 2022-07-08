@@ -1,7 +1,6 @@
 package com.shamilov.core.components.presentation.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,14 +20,19 @@ data class BannerViewData(
     val image: String,
     val bannerSize: BannerSize,
     val deeplink: String,
-) {
-    enum class BannerSize(val height: Dp) {
-        SMALL(100.dp), MEDIUM(200.dp), LARGE(300.dp),
-    }
+)
+
+enum class BannerSize(val height: Dp) {
+    SMALL(100.dp), MEDIUM(200.dp), LARGE(300.dp),
 }
 
 @Composable
-fun BannerComposable(data: BannerViewData, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun BannerComposable(
+    data: BannerViewData,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+
     val image = data.image
     val bannerSize = data.bannerSize
 
@@ -41,16 +45,15 @@ fun BannerComposable(data: BannerViewData, modifier: Modifier = Modifier, onClic
         modifier = modifier
             .padding(horizontal = 8.dp)
             .clip(RoundedCornerShape(Dimens.cornerRadius))
-            .fillMaxWidth()
             .height(bannerSize.height)
-            .clickable { onClick() }
+            .clickable { onClick() },
     )
 }
 
 @Composable
 @Preview
 fun BannerComponentPreview() {
-    BannerComposable(data = BannerViewData(image = "", BannerViewData.BannerSize.SMALL, "")) {
+    BannerComposable(data = BannerViewData(image = "", BannerSize.SMALL, "")) {
 
     }
 }
