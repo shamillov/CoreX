@@ -7,12 +7,12 @@ import kotlinx.serialization.Serializable
 class BannersComponentResponse(
     override val type: String?,
     val items: List<BannerComponentResponse>,
+    val size: String,
 ) : ComponentResponse() {
 
     @Serializable
     class BannerComponentResponse(
         val image: String,
-        val size: String,
         @SerialName("deep_link")
         val deeplink: String,
     )

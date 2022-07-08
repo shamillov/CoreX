@@ -46,11 +46,11 @@ class ComponentsViewDataMapper @Inject constructor() {
         )
     }
 
-    private fun mapBannerSize(size: String): BannerViewData.BannerSize {
+    private fun mapBannerSize(size: String): BannerSize {
         return when (size) {
-            BANNER_SMALL -> BannerViewData.BannerSize.SMALL
-            BANNER_MEDIUM -> BannerViewData.BannerSize.MEDIUM
-            BANNER_LARGE -> BannerViewData.BannerSize.LARGE
+            BANNER_SMALL -> BannerSize.SMALL
+            BANNER_MEDIUM -> BannerSize.MEDIUM
+            BANNER_LARGE -> BannerSize.LARGE
             else -> error("The $size size not supported")
         }
     }
