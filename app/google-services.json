@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "448871721336",
+    "project_id": "core-feab8",
+    "storage_bucket": "core-feab8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448871721336:android:7de325536598f0143b408d",
+        "android_client_info": {
+          "package_name": "com.shamilov.core"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448871721336-9nmd31pjhuv6f76tdm8s92hgnmbl093s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAof2odi64lhSCminRcC7-3QxDKYSRbbyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448871721336-9nmd31pjhuv6f76tdm8s92hgnmbl093s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
